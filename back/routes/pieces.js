@@ -59,7 +59,7 @@ router.get('/:id', async (req, res) => {
 router.post(
   '/',
   verifyToken,
-  requireRole(['admin']),
+  requireRole(['admin','technician']),
   upload.array('images', 8),
   async (req, res) => {
     try {
