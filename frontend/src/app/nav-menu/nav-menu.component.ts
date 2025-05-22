@@ -26,7 +26,7 @@ export class NavMenuComponent {
   private menu: MenuItem[] = [
     /* --- público / todos los roles --- */
     { label: 'Home',     path: '/',           roles: ['guest','technician','delivery','admin'] },
-    { label: 'Catálogo', path: '/catalog',    roles: ['guest','technician','delivery','admin'],
+    { label: 'Catálogo', path: '/catalog',    roles: ['admin'], ///,'delivery','technician','guest',
       adminOverride: '/admin/pieces' },   // para admin redirige a inventario
 
     /* --- técnico --- */

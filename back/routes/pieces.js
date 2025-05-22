@@ -117,7 +117,7 @@ router.delete(
 router.patch(
   '/:id/publish',
   verifyToken,
-  requireRole(['admin']),
+  requireRole(['admin','technician']),
   [param('id').isMongoId()],
   validate,
   async (req, res) => {
