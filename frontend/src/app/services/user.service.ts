@@ -36,7 +36,10 @@ export class UserService {
     return this.http.post<User>(this.api, body);
   }
 
-  updateUser(id: string, body: { name: string; email: string; role: string; password?: string }) {
+  updateUser(
+    id: string,
+    body: { name: string; email: string; role: string; password?: string }
+  ): Observable<{ message: string }> {
     return this.http.put<{ message: string }>(`${this.api}/${id}`, body);
   }
 

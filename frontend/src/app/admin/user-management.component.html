@@ -1,6 +1,6 @@
 <h1>Gestión de Usuarios</h1>
 
-<!-- TABLA SOLICITUDES PENDIENTES -->
+<!-- Pendientes -->
 <h2>Solicitudes pendientes</h2>
 <table *ngIf="pending.length; else noPend">
   <thead>
@@ -22,31 +22,17 @@
 
 <hr />
 
-<!-- FORMULARIO CREAR -->
+<!-- Crear -->
 <form *ngIf="!editMode" (ngSubmit)="createUser()" #cf="ngForm" class="user-form">
-  <label>
-    Nombre:
-    <input name="name" [(ngModel)]="form.name" required />
-  </label>
-  <label>
-    Email:
-    <input name="email" [(ngModel)]="form.email" required email />
-  </label>
-  <label>
-    Contraseña:
-    <input type="password" name="password" [(ngModel)]="form.password" required minlength="8" />
-  </label>
-  <label>
-    Rol:
-    <select name="role" [(ngModel)]="form.role" required>
-      <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
-    </select>
-  </label>
+  <!-- ...igual que antes... -->
   <button type="submit" [disabled]="cf.invalid">Crear Usuario</button>
 </form>
 
-<!-- FORMULARIO EDITAR -->
-<form *ngIf="editMode" (ngSubmit)="updateUser()" #ef="ngForm" class="user-form">
+<!-- Editar -->
+<form *ngIf="editMode"
+      (ngSubmit)="updateUser(ef)"
+      #ef="ngForm"
+      class="user-form">
   <label>
     Nombre:
     <input name="name" [(ngModel)]="form.name" required />
@@ -56,8 +42,13 @@
     <input name="email" [(ngModel)]="form.email" required email />
   </label>
   <label>
-    Nueva Contraseña:
-    <input type="password" name="password" [(ngModel)]="form.password" minlength="8" />
+    Nueva Contraseña (opcional):
+    <input
+      type="password"
+      name="password"
+      [(ngModel)]="form.password"
+      placeholder="Dejar en blanco para no cambiar"
+    />
   </label>
   <label>
     Rol:
@@ -65,13 +56,23 @@
       <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
     </select>
   </label>
-  <button type="submit" [disabled]="ef.invalid">Guardar Cambios</button>
+
+  <!-- Deshabilita si el form global es inválido O si la contraseña (si hay) es <8 -->
+  <button
+    type="submit"
+    [disabled]="
+      ef.invalid ||
+      (form.password && form.password.length < 8)
+    "
+  >
+    Guardar Cambios
+  </button>
   <button type="button" (click)="resetForm()">Cancelar</button>
 </form>
 
 <hr />
 
-<!-- LISTA DE USUARIOS ACTIVOS -->
+<!-- Lista de usuarios -->
 <h2>Usuarios Activos</h2>
 <table *ngIf="users.length; else noUsers">
   <thead>

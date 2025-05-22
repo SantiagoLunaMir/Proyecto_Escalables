@@ -21,8 +21,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let w of works">
-          <td>{{ w.pieceId.name }}</td>
-          <td>{{ w.doctorId.name }}</td>
+          <td>{{ w.pieceId?.name }}</td>
+          <td>{{ w.doctorId?.name || '—' }}</td>
           <td>{{ w.deliveryDate | date }}</td>
           <td>{{ w.cost }}</td>
           <td>{{ w.status }}</td>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserService, User, PendingUser } from '../services/user.service';
 
@@ -38,13 +38,25 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  updateUser() {
-    if (!this.editId) return;
-    const data: any = { name: this.form.name, email: this.form.email, role: this.form.role };
-    if (this.form.password) data.password = this.form.password;
-    this.svc.updateUser(this.editId, data).subscribe(() => {
-      this.resetForm();
-      this.load();
+  updateUser(ef: NgForm) {
+    if (!this.editId || ef.invalid) return;
+
+    // construimos el body dejando la password opcional
+    const body: any = {
+      name: this.form.name,
+      email: this.form.email,
+      role: this.form.role
+    };
+    if (this.form.password) {
+      body.password = this.form.password;
+    }
+
+    this.svc.updateUser(this.editId, body).subscribe({
+      next: () => {
+        this.resetForm();
+        this.load();
+      },
+      error: err => console.error('Error al actualizar usuario', err)
     });
   }
 

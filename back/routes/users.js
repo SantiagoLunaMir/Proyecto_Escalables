@@ -16,18 +16,26 @@ router.get('/me', verifyToken, async (req, res) => {
 });
 
 router.put('/me', verifyToken, async (req, res) => {
-  const { name, phone, address, password } = req.body;
-  const me = await User.findById(req.user.id);
-  if (!me) return res.status(404).json({ error: 'Usuario no encontrado' });
+  try {
+    // Construimos un objeto solo con los campos que llegaron
+    const updates = {};
+    ['name','phone','address','password'].forEach(f => {
+      if (req.body[f] != null) updates[f] = req.body[f];
+    });
 
-  if (name)  me.name  = name;
-  if (phone) me.phone = phone;
-  if (address) me.address = address;
-  if (password) me.password = password; // hash en pre-save
-  await me.save();
+    await User.findByIdAndUpdate(
+      req.user.id,
+      { $set: updates },
+      { runValidators: true, context: 'query' }
+    );
 
-  res.json({ message: 'Perfil actualizado' });
+    res.json({ message: 'Perfil actualizado' });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ error: err.message });
+  }
 });
+
 
 /* ---------- Pendientes de aprobación ---------- */
 router.get('/pending',
@@ -37,7 +45,8 @@ router.get('/pending',
     const pendings = await User.find({ approved: false, rejected: false })
                                .select('-password');
     res.json(pendings);
-  });
+  }
+);
 
 /* ---------- Aprobar ---------- */
 router.patch('/:id/approve',
@@ -54,7 +63,8 @@ router.patch('/:id/approve',
     await user.save();
 
     res.json({ message: 'Usuario aprobado' });
-  });
+  }
+);
 
 /* ---------- Rechazar ---------- */
 router.patch('/:id/reject',
@@ -70,7 +80,8 @@ router.patch('/:id/reject',
     await user.save();
 
     res.json({ message: 'Usuario rechazado' });
-  });
+  }
+);
 
 /* ---------- Listado completo (admin) ---------- */
 router.get('/',
@@ -79,7 +90,8 @@ router.get('/',
   async (_req, res) => {
     const users = await User.find().select('-password');
     res.json(users);
-  });
+  }
+);
 
 /* ---------- EDITAR OTRO USUARIO (admin) ---------- */
 router.put(
@@ -93,10 +105,9 @@ router.put(
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
 
-    // Actualizo sólo los campos que vengan
-    if (name)     user.name  = name;
-    if (email)    user.email = email;
-    if (role)     user.role  = role;
+    if (name)     user.name     = name;
+    if (email)    user.email    = email;
+    if (role)     user.role     = role;
     if (password) user.password = password;  // se harcodea en pre-save
     await user.save();
 
@@ -135,7 +146,16 @@ router.post(
     const { name, email, password, role } = req.body;
     if (await User.findOne({ email }))
       return res.status(409).json({ error: 'Email ya registrado' });
-    const u = await User.create({ name, email, password, role, approved: true });
+    // Asignamos roleRequested igual al rol deseado
+    const u = await User.create({
+      name,
+      email,
+      password,
+      role,
+      roleRequested: role,
+      approved: true
+    });
+    // No es necesario setear 'rejected'
     res.status(201).json(u);
   }
 );
