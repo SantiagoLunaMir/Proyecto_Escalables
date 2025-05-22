@@ -1,0 +1,27 @@
+<!-- frontend/src/app/admin/piece-list/piece-list.component.html -->
+<h2 class="heading">Catálogo de Piezas</h2>
+
+<div *ngIf="loading" class="loading">Cargando…</div>
+
+<div *ngIf="!loading" class="product-grid">
+  <div *ngFor="let p of pieces" class="product-card">
+    <img
+      [src]="p.images?.[0] || '/assets/placeholder.png'"
+      alt="{{ p.name }}"
+      class="product-image"
+    />
+
+    <div class="product-body">
+      <h3 class="product-title">{{ p.name }}</h3>
+      <p class="product-desc">{{ p.description }}</p>
+      <p class="product-meta">
+        <span>Entrega: {{ p.estimatedTime }} días</span>
+        <span>Contacto: {{ p.technicianContact }}</span>
+      </p>
+    </div>
+
+    <div class="product-actions">
+      <button (click)="viewDetail(p._id!)">Ver detalle</button>
+    </div>
+  </div>
+</div>

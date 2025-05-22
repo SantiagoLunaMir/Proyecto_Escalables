@@ -1,0 +1,46 @@
+<div class="max-w-4xl mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Administrar Doctores</h1>
+  
+    <div class="mb-4 flex gap-2">
+      <input
+        type="text"
+        [(ngModel)]="q"
+        placeholder="Buscar por nombre…"
+        class="border p-2 flex-1 rounded"
+      />
+      <button (click)="load()" class="bg-gray-600 text-white px-4 py-2 rounded">
+        Buscar
+      </button>
+      <button (click)="create()" class="bg-blue-600 text-white px-4 py-2 rounded">
+        + Nuevo
+      </button>
+    </div>
+  
+    <div *ngIf="loading" class="text-center py-10">Cargando…</div>
+  
+    <table *ngIf="!loading" class="w-full table-auto border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-2 text-left">Nombre</th>
+          <th class="p-2 text-left">Dirección</th>
+          <th class="p-2 text-left">Teléfono</th>
+          <th class="p-2 text-left">Email</th>
+          <th class="p-2">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of doctors" class="border-b hover:bg-gray-50">
+          <td class="p-2">{{ d.name }}</td>
+          <td class="p-2">{{ d.address }}</td>
+          <td class="p-2">{{ d.phone }}</td>
+          <td class="p-2">{{ d.email || '—' }}</td>
+          <td class="p-2 text-center">
+            <button (click)="edit(d._id!)" class="text-blue-600 hover:underline">Editar</button>
+            <span class="mx-1">|</span>
+            <button (click)="delete(d._id!)" class="text-red-600 hover:underline">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

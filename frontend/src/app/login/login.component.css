@@ -1,0 +1,49 @@
+/* Contenedor centralizado */
+.login-container {
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: var(--ort-white);
+  border: 1px solid var(--ort-gray);
+  border-radius: var(--ort-radius);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulario y grupos */
+.login-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.login-form label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Inputs */
+.form-control {
+  padding: 0.5rem;
+  border: 1px solid var(--ort-gray);
+  border-radius: var(--ort-radius);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--ort-blue);
+}
+
+/* Botón al 100% ancho */
+.login-form button {
+  width: 100%;
+}
+
+/* Mensaje de error */
+.error {
+  color: #dc2626;
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  text-align: center;
+}

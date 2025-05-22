@@ -1,0 +1,92 @@
+/* frontend/src/app/tech/calendar.component.css */
+
+/* Asegura que el calendar ocupe todo el ancho disponible dentro de su contenedor */
+:host {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Ajusta el ancho máximo y centra el calendario */
+.calendar-wrapper {
+  max-width: 900px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+/* FullCalendar usa muchas clases genéricas; con ::ng-deep para que tus estilos las afecten */
+::ng-deep .fc {
+  font-family: 'Roboto', sans-serif;
+  --fc-button-bg-color: var(--ort-blue);
+  --fc-button-hover-bg-color: var(--ort-blue-dark);
+  --fc-button-text-color: var(--ort-white);
+}
+
+/* Cabecera (mes y botones) */
+::ng-deep .fc-toolbar-title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  color: var(--ort-text);
+}
+::ng-deep .fc-button, 
+::ng-deep .fc-today-button,
+::ng-deep .fc-prev-button,
+::ng-deep .fc-next-button {
+  background: var(--ort-blue);
+  color: var(--ort-white);
+  border: none;
+  border-radius: var(--ort-radius);
+  padding: 0.4rem 0.75rem;
+  font-weight: 500;
+}
+::ng-deep .fc-button:hover,
+::ng-deep .fc-button:focus {
+  background: var(--ort-blue-dark);
+  outline: none;
+}
+
+/* Día de hoy */
+::ng-deep .fc-day-today {
+  background: var(--ort-blue-light, #e0f7ff); /* un azul muy suave */
+}
+
+/* Días del mes */
+::ng-deep .fc-daygrid-day {
+  border: 1px solid var(--ort-gray-light);
+}
+::ng-deep .fc-daygrid-day-number {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0.25rem;
+}
+
+/* Estados de los eventos (usa los mismos colores que en tu TS) */
+::ng-deep .fc-event-dot {
+  border-width: 8px !important;
+}
+::ng-deep .fc-event.fc-event-past .fc-daygrid-event-dot, /* completado */
+::ng-deep .fc-event[style*="rgb(22, 163, 74)"] .fc-daygrid-event-dot {
+  border-color: #16a34a;
+}
+::ng-deep .fc-event[style*="rgb(250, 204, 21)"] .fc-daygrid-event-dot { /* en proceso */
+  border-color: #facc15;
+}
+::ng-deep .fc-event[style*="rgb(248, 113, 113)"] .fc-daygrid-event-dot { /* pendiente */
+  border-color: #f87171;
+}
+
+/* Contenedor extra para establecer la altura si se desea */
+.calendar-wrapper ::ng-deep .fc-scroller-harness,
+.calendar-wrapper ::ng-deep .fc-scroller {
+  /* ajusta la altura del mes al 70vh, por ejemplo */
+  max-height: 70vh;
+}
+
+/* Opcional: texto de referencia debajo */
+:host p {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--ort-text);
+  font-size: 0.875rem;
+}

@@ -1,0 +1,50 @@
+<h1>Gestión de Usuarios</h1>
+
+<!-- TABLA SOLICITUDES PENDIENTES -->
+<h2>Solicitudes pendientes</h2>
+<table *ngIf="pending.length; else noPend">
+  <thead>
+    <tr><th>Nombre</th><th>Email</th><th>Rol solicitado</th><th>Acciones</th></tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of pending">
+      <td>{{ p.name }}</td>
+      <td>{{ p.email }}</td>
+      <td>{{ p.roleRequested }}</td>
+      <td>
+        <button (click)="approve(p._id)">Aprobar</button>
+        <button (click)="reject(p._id)">Rechazar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #noPend><p>No hay solicitudes pendientes.</p></ng-template>
+
+<hr />
+
+<!-- FORMULARIO CREAR/EDITAR -->
+<form *ngIf="!editMode" (ngSubmit)="createUser()" #cf="ngForm" class="user-form">
+  <!-- campos … -->
+</form>
+
+<form *ngIf="editMode" (ngSubmit)="updateUser()" #ef="ngForm" class="user-form">
+  <!-- campos … -->
+</form>
+
+<hr />
+
+<!-- LISTA DE USUARIOS ACTIVOS -->
+<table>
+  <thead>
+    <tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Acciones</th></tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of users">
+      <td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td>
+      <td>
+        <button (click)="edit(u)">Editar</button>
+        <button (click)="delete(u.id)">Eliminar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

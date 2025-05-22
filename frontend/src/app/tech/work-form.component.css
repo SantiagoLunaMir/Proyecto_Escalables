@@ -1,0 +1,27 @@
+.work-form {
+  margin-top: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--ort-gray);
+  border-radius: var(--ort-radius);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--ort-blue);
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}

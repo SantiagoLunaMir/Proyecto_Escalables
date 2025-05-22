@@ -1,0 +1,74 @@
+/* frontend/src/app/catalog/piece-detail.component.css */
+.detail-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 1rem;
+}
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--ort-blue);
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+.detail-card {
+  border: 1px solid var(--ort-gray);
+  border-radius: var(--ort-radius);
+  background: var(--ort-white);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+.detail-image {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+}
+.detail-body {
+  padding: 1rem;
+}
+.detail-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.detail-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  color: var(--ort-gray);
+}
+.price {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ort-text);
+}
+.detail-desc {
+  margin-bottom: 1rem;
+  color: var(--ort-text);
+}
+.detail-thumbs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.thumb {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--ort-radius);
+}
+.request-btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--ort-blue);
+  color: var(--ort-white);
+  border: none;
+  border-radius: var(--ort-radius);
+  cursor: pointer;
+  font-size: 1rem;
+}
+.request-btn:hover {
+  background: var(--ort-blue-dark);
+}

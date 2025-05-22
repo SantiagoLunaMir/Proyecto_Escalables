@@ -1,0 +1,84 @@
+/* frontend/src/app/catalog/catalog.component.css */
+
+/* Contenedor principal */
+.catalog-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+}
+
+/* Título */
+.catalog-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Rejilla de tarjetas */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+  gap: 1rem;
+}
+
+/* Tarjeta individual */
+.product-card {
+  background: var(--ort-white);
+  border: 1px solid var(--ort-gray);
+  border-radius: var(--ort-radius);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+}
+
+/* Imagen de producto */
+.product-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Cuerpo de la tarjeta */
+.product-body {
+  padding: 0.75rem;
+}
+.product-title {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem;
+}
+.product-desc {
+  font-size: 0.9rem;
+  color: var(--ort-text);
+  margin-bottom: 0.75rem;
+}
+.product-meta {
+  font-size: 0.85rem;
+  color: var(--ort-gray);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Paginación */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+.pagination button {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ort-gray);
+  background: var(--ort-white);
+  cursor: pointer;
+  border-radius: var(--ort-radius);
+}
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

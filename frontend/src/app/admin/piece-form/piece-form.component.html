@@ -1,0 +1,68 @@
+<div class="card" style="max-width:600px; margin:2rem auto;">
+  <h1 style="margin-bottom:1rem;">
+    {{ editMode ? 'Editar' : 'Nueva' }} Pieza
+  </h1>
+
+  <form (ngSubmit)="submit()">
+    <div class="form-group">
+      <label for="name">Nombre:</label>
+      <input id="name"
+             type="text"
+             [(ngModel)]="form.name"
+             name="name"
+             required
+             class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="estimatedTime">Tiempo estimado (días):</label>
+      <input id="estimatedTime"
+             type="number"
+             [(ngModel)]="form.estimatedTime"
+             name="estimatedTime"
+             min="1"
+             required
+             class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Descripción:</label>
+      <textarea id="description"
+                [(ngModel)]="form.description"
+                name="description"
+                rows="3"
+                class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="technicianContact">Contacto técnico:</label>
+      <input id="technicianContact"
+             type="text"
+             [(ngModel)]="form.technicianContact"
+             name="technicianContact"
+             class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="images">Imágenes (máx. 8):</label>
+      <input id="images"
+             type="file"
+             (change)="onFileChange($event)"
+             multiple accept="image/*"
+             class="form-control" />
+    </div>
+
+    <div *ngIf="existingImages.length" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem;">
+      <img *ngFor="let url of existingImages"
+           [src]="url"
+           alt="Pieza"
+           style="width:100px; height:auto;
+                  border:1px solid var(--ort-gray);
+                  border-radius:var(--ort-radius);" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="width:100%;">
+      {{ editMode ? 'Actualizar' : 'Crear' }}
+    </button>
+  </form>
+</div>

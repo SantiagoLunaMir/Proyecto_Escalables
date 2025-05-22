@@ -1,0 +1,71 @@
+<h1>Catálogo de piezas dentales</h1>
+
+<!-- ##### Formulario (solo admin o técnico autenticado) ##### -->
+<ng-container *ngIf="(user$ | async) as user">
+  <form *ngIf="user.role === 'admin' || user.role === 'technician'"
+        (ngSubmit)="submit()"
+        #pieceForm="ngForm"
+        class="piece-form">
+
+    <label>Nombre:
+      <input type="text" [(ngModel)]="form.name" name="name" required />
+    </label>
+
+    <label>Descripción:
+      <input type="text" [(ngModel)]="form.description" name="description" />
+    </label>
+
+    <label>Tiempo estimado:
+      <input type="text" [(ngModel)]="form.estimatedTime" name="estimatedTime" />
+    </label>
+
+    <label>Contacto técnico:
+      <input type="email" [(ngModel)]="form.technicianContact" name="technicianContact" />
+    </label>
+
+    <label>Imágenes (máx. 8):
+      <input type="file"
+             (change)="onFileChange($event)"
+             multiple
+             accept="image/*" />
+    </label>
+
+    <button type="submit" [disabled]="pieceForm.invalid">
+      Agregar pieza
+    </button>
+  </form>
+</ng-container>
+
+<hr />
+
+<!-- ##### Catálogo visible a todos ##### -->
+<div *ngIf="pieces.length; else noData">
+  <div *ngFor="let p of pieces" class="piece-card">
+    <h2>{{ p.name }}</h2>
+    <p>{{ p.description }}</p>
+    <p><strong>Tiempo estimado:</strong> {{ p.estimatedTime }}</p>
+    <p><strong>Contacto:</strong> {{ p.technicianContact }}</p>
+
+    <div *ngIf="p.images?.length">
+      <p>Imágenes:</p>
+      <div class="images">
+        <img *ngFor="let img of p.images"
+             [src]="img"
+             alt="{{ p.name }}"
+             style="max-width:100px; margin:4px;" />
+      </div>
+    </div>
+
+    <!-- Botón Editar solo para admin o técnico dueño -->
+    <div class="actions"
+         *ngIf="canEdit(p, (user$ | async))">
+      <button (click)="edit(p._id!)">Editar</button>
+    </div>
+
+    <hr />
+  </div>
+</div>
+
+<ng-template #noData>
+  <p>No hay piezas disponibles.</p>
+</ng-template>

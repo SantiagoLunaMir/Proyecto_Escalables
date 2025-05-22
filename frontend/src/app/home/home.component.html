@@ -1,0 +1,97 @@
+<!-- src/app/home/home.component.html -->
+<div class="card home-card">
+  <h1 class="hero">Catálogo de piezas dentales</h1>
+
+  <ng-container *ngIf="user$ | async as user">
+    <div *ngIf="user.role === 'admin' || user.role === 'technician'">
+      <form (ngSubmit)="submit(f)" #f="ngForm" class="home-form">
+        <div class="form-group">
+          <label for="name">Nombre:</label>
+          <input
+            id="name"
+            type="text"
+            [(ngModel)]="form.name"
+            name="name"
+            required
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Descripción:</label>
+          <input
+            id="description"
+            type="text"
+            [(ngModel)]="form.description"
+            name="description"
+            required
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="estimatedTime">Tiempo estimado (días):</label>
+          <input
+            id="estimatedTime"
+            type="number"
+            [(ngModel)]="form.estimatedTime"
+            name="estimatedTime"
+            min="1"
+            required
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="technicianContact">Contacto técnico:</label>
+          <input
+            id="technicianContact"
+            type="email"
+            [(ngModel)]="form.technicianContact"
+            name="technicianContact"
+            required
+            class="form-control"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="images">Imágenes (máx. 8):</label>
+          <input
+            id="images"
+            type="file"
+            multiple
+            accept="image/*"
+            (change)="onFileChange($event)"
+            class="form-control"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="f.invalid"
+        >
+          Agregar pieza
+        </button>
+      </form>
+    </div>
+  </ng-container>
+
+  <hr />
+
+  <div class="piece-list">
+    <div *ngFor="let p of pieces" class="card piece-card">
+      <h2>{{ p.name }}</h2>
+      <p>{{ p.description }}</p>
+      <p><strong>Tiempo estimado:</strong> {{ p.estimatedTime }}</p>
+      <p><strong>Contacto:</strong> {{ p.technicianContact }}</p>
+      <button
+        *ngIf="canEdit(p, (user$ | async))"
+        class="btn btn-primary"
+        (click)="edit(p._id!)"
+      >
+        Editar
+      </button>
+    </div>
+  </div>
+</div>

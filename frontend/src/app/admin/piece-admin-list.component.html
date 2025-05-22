@@ -1,0 +1,34 @@
+<div class="max-w-5xl mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Publicar / Despublicar Piezas</h1>
+  
+    <div *ngIf="loading" class="text-center py-10">Cargando…</div>
+  
+    <table *ngIf="!loading" class="w-full table-auto border-collapse">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-2">Nombre</th>
+          <th class="p-2">Precio</th>
+          <th class="p-2">Publicado</th>
+          <th class="p-2">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of pieces" class="border-b">
+          <td class="p-2">{{ p.name }}</td>
+          <td class="p-2">{{ p.price | currency:'MXN' }}</td>
+          <td class="p-2 text-center">
+            {{ p.isPublic ? 'Sí' : 'No' }}
+          </td>
+          <td class="p-2 text-center">
+            <button
+              (click)="togglePublic(p)"
+              class="px-3 py-1 rounded border"
+            >
+              {{ p.isPublic ? 'Despublicar' : 'Publicar' }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

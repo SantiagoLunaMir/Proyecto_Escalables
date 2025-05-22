@@ -1,0 +1,19 @@
+<!-- frontend/src/app/tech/calendar.component.html -->
+<div class="calendar-wrapper max-w-5xl mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Mis trabajos</h1>
+
+  <div *ngIf="loading" class="text-center py-10">
+    Cargando…
+  </div>
+
+  <div *ngIf="!loading" class="calendar-content">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+  </div>
+
+  <p class="mt-4 text-sm text-gray-600">
+    Clic sobre un trabajo:
+    <span class="text-red-500">pendiente</span>
+    → <span class="text-yellow-500">en curso</span>
+    → <span class="text-green-600">hecho</span>.
+  </p>
+</div>

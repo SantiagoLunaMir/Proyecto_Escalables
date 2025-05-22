@@ -1,0 +1,113 @@
+<div class="card full-screen">
+  <h1>Gestión de Doctores</h1>
+
+  <form (ngSubmit)="submit()" #f="ngForm" class="doctor-form">
+    <div class="form-group">
+      <label for="name">Nombre:</label>
+      <input
+        id="name"
+        type="text"
+        [(ngModel)]="form.name"
+        name="name"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="specialty">Especialidad:</label>
+      <input
+        id="specialty"
+        type="text"
+        [(ngModel)]="form.specialty"
+        name="specialty"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="contactInfo">Contacto:</label>
+      <input
+        id="contactInfo"
+        type="text"
+        [(ngModel)]="form.contactInfo"
+        name="contactInfo"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="address">Dirección:</label>
+      <input
+        id="address"
+        type="text"
+        [(ngModel)]="form.address"
+        name="address"
+        required
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Notas:</label>
+      <input
+        id="notes"
+        type="text"
+        [(ngModel)]="form.notes"
+        name="notes"
+        class="form-control"
+      />
+    </div>
+
+    <div class="button-row">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="f.invalid"
+      >
+        {{ editMode ? 'Actualizar' : 'Crear' }}
+      </button>
+      <button
+        *ngIf="editMode"
+        type="button"
+        class="btn btn-secondary"
+        (click)="resetForm()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+
+  <hr />
+
+  <div class="table-container">
+    <table class="table-card">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Especialidad</th>
+          <th>Contacto</th>
+          <th>Dirección</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of doctors">
+          <td>{{ d.name }}</td>
+          <td>{{ d.specialty }}</td>
+          <td>{{ d.contactInfo }}</td>
+          <td>{{ d.address }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="edit(d)">
+              Editar
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="delete(d._id!)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

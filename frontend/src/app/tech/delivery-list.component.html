@@ -1,0 +1,42 @@
+<h1>Panel de repartidor</h1>
+
+<!-- Trabajos disponibles -->
+<h2>Trabajos disponibles</h2>
+<table *ngIf="available.length; else empty">
+  <thead>
+    <tr>
+      <th></th><th>Pieza</th><th>Doctor</th><th>Dirección</th><th>Fecha de entrega</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let w of available">
+      <td><input type="checkbox" (change)="toggle(w._id!, $event)" /></td>
+      <td>{{ w.pieceId.name }}</td>
+      <td>{{ w.doctorId.name }}</td>
+      <td>{{ w.doctorId.address }}</td>
+      <td>{{ w.deliveryDate | date:'longDate' }}</td>
+    </tr>
+  </tbody>
+</table>
+<ng-template #empty><p>No hay trabajos disponibles.</p></ng-template>
+<button (click)="assign()" [disabled]="!allSelected()">Agregar a mi ruta</button>
+
+<hr />
+
+<!-- Mis entregas -->
+<h2>Mis entregas</h2>
+<div *ngFor="let d of my" class="delivery-card">
+  <p><strong>Pieza:</strong> {{ d.workId.pieceId.name }}</p>
+  <p><strong>Doctor:</strong> {{ d.workId.doctorId.name }}</p>
+  <p><strong>Dirección:</strong> {{ d.workId.doctorId.address }}</p>
+  <p><strong>Estado:</strong> {{ traducirEstado(d.status) }}</p>
+
+  <button *ngIf="d.status==='pendiente'" (click)="markDelivered(d._id)">
+    Marcar como entregado
+  </button>
+  <button *ngIf="d.status==='pendiente'" (click)="cancel(d._id)">
+    Cancelar entrega
+  </button>
+
+  <hr />
+</div>

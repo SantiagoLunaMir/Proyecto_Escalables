@@ -1,0 +1,59 @@
+<div class="max-w-lg mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">
+      {{ isNew ? 'Nuevo Doctor' : 'Editar Doctor' }}
+    </h1>
+  
+    <form #f="ngForm" (ngSubmit)="submit(f)" class="space-y-4">
+      <div>
+        <label class="block mb-1">Nombre</label>
+        <input
+          name="name"
+          [(ngModel)]="model.name"
+          required
+          class="w-full border p-2 rounded"
+        />
+      </div>
+  
+      <div>
+        <label class="block mb-1">Dirección</label>
+        <input
+          name="address"
+          [(ngModel)]="model.address"
+          required
+          class="w-full border p-2 rounded"
+        />
+      </div>
+  
+      <div>
+        <label class="block mb-1">Teléfono</label>
+        <input
+          name="phone"
+          [(ngModel)]="model.phone"
+          required
+          class="w-full border p-2 rounded"
+        />
+      </div>
+  
+      <div>
+        <label class="block mb-1">Email (opcional)</label>
+        <input
+          name="email"
+          [(ngModel)]="model.email"
+          type="email"
+          class="w-full border p-2 rounded"
+        />
+      </div>
+  
+      <div class="flex gap-2">
+        <button
+          type="submit"
+          [disabled]="f.invalid"
+          class="bg-green-600 text-white px-4 py-2 rounded"
+        >
+          Guardar
+        </button>
+        <a routerLink="/admin/doctors" class="px-4 py-2 border rounded">Cancelar</a>
+      </div>
+    </form>
+  </div>
+  

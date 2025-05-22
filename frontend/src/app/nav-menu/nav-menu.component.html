@@ -1,0 +1,32 @@
+<nav class="navbar">
+  <!-- Botón hamburguesa -->
+  <button class="burger" (click)="toggle()" aria-label="Toggle menu">☰</button>
+
+  <!-- Logo -->
+  <a routerLink="/" class="logo">DentalPortal</a>
+
+  <!-- Saludo al usuario (solo en desktop) -->
+  <ng-container *ngIf="user$ | async as user">
+    <span class="user-info">Hola, {{ user.name }}!</span>
+  </ng-container>
+
+  <div class="spacer"></div>
+
+  <!-- Enlaces para usuario autenticado -->
+  <ng-container *ngIf="user$ | async as user; else guest">
+    <ul [class.open]="open">
+      <li *ngFor="let item of allowedItems(user)">
+        <a [routerLink]="item.path" (click)="open = false">{{ item.label }}</a>
+      </li>
+      <li><button (click)="logout()">Logout</button></li>
+    </ul>
+  </ng-container>
+
+  <!-- Enlaces para visitante -->
+  <ng-template #guest>
+    <ul [class.open]="open">
+      <li><a routerLink="/login" (click)="open = false">Login</a></li>
+      <li><a routerLink="/register" (click)="open = false">Register</a></li>
+    </ul>
+  </ng-template>
+</nav>

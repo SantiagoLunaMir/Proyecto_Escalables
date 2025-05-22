@@ -1,0 +1,94 @@
+/* src/app/admin/doctors/doctor-management.component.css */
+
+/* Hacemos que la tarjeta cubra todo el viewport */
+.full-screen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 2rem;
+  border-radius: 0;
+  box-shadow: none;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* Titular centrado y margen inferior */
+.full-screen > h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Formulario ocupa el espacio necesario arriba */
+.doctor-form {
+  flex: 0 0 auto;
+  margin-bottom: 2rem;
+}
+
+/* Agrupa cada label + input */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+/* Inputs a todo ancho */
+.form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--ort-gray);
+  border-radius: var(--ort-radius);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--ort-blue);
+}
+
+/* Fila de botones */
+.button-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Contenedor de la lista de doctores */
+/* Ocupa aproximadamente el 40% de la altura total */
+.table-container {
+  flex: 0 0 40%;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
+/* Tabla dentro de la tarjeta */
+.table-card {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-card th,
+.table-card td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--ort-gray);
+  text-align: left;
+}
+
+.table-card thead {
+  background: var(--ort-gray-light);
+}
+
+/* Tamaños de botones pequeños */
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Botón de eliminar en rojo */
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+}

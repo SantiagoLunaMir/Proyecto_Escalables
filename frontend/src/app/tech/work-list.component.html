@@ -1,0 +1,46 @@
+<div class="card" style="max-width:900px; margin:2rem auto; padding:1.5rem;">
+  <h1>Mis Trabajos</h1>
+
+  <div class="toolbar">
+    <button routerLink="/tech/works/new" class="btn btn-primary">
+      + Nuevo trabajo
+    </button>
+  </div>
+
+  <div class="table-container">
+    <table class="table-card">
+      <thead>
+        <tr>
+          <th>Pieza</th>
+          <th>Doctor</th>
+          <th>Entrega</th>
+          <th>Costo</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let w of works">
+          <td>{{ w.pieceId.name }}</td>
+          <td>{{ w.doctorId.name }}</td>
+          <td>{{ w.deliveryDate | date }}</td>
+          <td>{{ w.cost }}</td>
+          <td>{{ w.status }}</td>
+          <td>
+            <a
+              [routerLink]="['/tech/works/edit', w._id]"
+              class="btn btn-primary btn-sm"
+              >Editar</a
+            >
+            <button
+              (click)="delete(w._id!)"
+              class="btn btn-danger btn-sm"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

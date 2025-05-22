@@ -1,0 +1,31 @@
+<!-- frontend/src/app/catalog/catalog.component.html -->
+<div class="catalog-container">
+  <h1 class="catalog-title">Catálogo de Piezas</h1>
+
+  <div *ngIf="loading" class="loading">Cargando…</div>
+  <div *ngIf="!loading && pieces.length === 0" class="no-result">Sin resultados</div>
+
+  <div *ngIf="!loading && pieces.length" class="product-grid">
+    <div *ngFor="let p of pieces" class="product-card" (click)="view(p._id)">
+      <img
+        [src]="p.images[0] || '/assets/placeholder.png'"
+        alt="{{ p.name }}"
+        class="product-image"
+      />
+      <div class="product-body">
+        <h2 class="product-title">{{ p.name }}</h2>
+        <p class="product-desc">{{ p.description }}</p>
+        <div class="product-meta">
+          <span>Entrega: {{ p.estimatedTime }} días</span>
+          <span>Precio: {{ p.price | currency:'MXN' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="pages > 1" class="pagination">
+    <button (click)="prev()" [disabled]="page===1">‹</button>
+    <span>{{ page }} / {{ pages }}</span>
+    <button (click)="next()" [disabled]="page===pages">›</button>
+  </div>
+</div>

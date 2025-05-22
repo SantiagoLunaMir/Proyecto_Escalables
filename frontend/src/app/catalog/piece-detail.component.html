@@ -1,0 +1,33 @@
+<!-- frontend/src/app/catalog/piece-detail.component.html -->
+<div class="detail-container">
+  <button routerLink="/catalog" class="back-btn">← Volver al catálogo</button>
+
+  <div *ngIf="piece" class="detail-card">
+    <img
+      [src]="piece.images[0] || '/assets/placeholder.png'"
+      alt="{{ piece.name }}"
+      class="detail-image"
+    />
+    <div class="detail-body">
+      <h1 class="detail-title">{{ piece.name }}</h1>
+      <div class="detail-meta">
+        <span class="price">{{ piece.price | currency:'MXN' }}</span>
+        <span class="time">• {{ piece.estimatedTime }} días entrega</span>
+      </div>
+      <p class="detail-desc">{{ piece.description }}</p>
+
+      <div *ngIf="piece.images.length > 1" class="detail-thumbs">
+        <img
+          *ngFor="let img of piece.images.slice(1,5)"
+          [src]="img"
+          alt="Imagen adicional"
+          class="thumb"
+        />
+      </div>
+
+      <button class="btn-primary request-btn">Solicitar pieza</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading">Cargando…</div>
+</div>
