@@ -1,3 +1,4 @@
+<!--/src/app/register/register.component.html-->
 <h2>Registro de cuenta</h2>
 <form (ngSubmit)="submit()" #f="ngForm">
   <label>Nombre:<input [(ngModel)]="form.name" name="name" required></label>
@@ -5,9 +6,13 @@
   <label>Contraseña:<input type="password" [(ngModel)]="form.password" name="password" required></label>
   <label>Teléfono:<input [(ngModel)]="form.phone" name="phone"></label>
   <label>Dirección:<input [(ngModel)]="form.address" name="address"></label>
-  <label>Tipo:<select [(ngModel)]="form.roleRequested" name="roleRequested">
+  <label>
+    Rol solicitado:
+    <select name="roleRequested" [(ngModel)]="form.roleRequested" required>
       <option value="technician">Técnico</option>
-      <option value="delivery">Repartidor</option></select></label>
+      <option value="delivery">Repartidor</option>
+    </select>
+  </label>
   <button type="submit" [disabled]="f.invalid">Enviar solicitud</button>
 </form>
 <p>{{ msg }}</p>

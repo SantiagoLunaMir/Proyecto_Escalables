@@ -1,6 +1,6 @@
 // back/routes/users.js
 const { Router }  = require('express');
-const { param }   = require('express-validator');
+const { body, param }   = require('express-validator');
 const User        = require('../models/User');
 const validate    = require('../middleware/validate');
 const verifyToken = require('../middleware/verifyToken');
@@ -80,5 +80,64 @@ router.get('/',
     const users = await User.find().select('-password');
     res.json(users);
   });
+
+/* ---------- EDITAR OTRO USUARIO (admin) ---------- */
+router.put(
+  '/:id',
+  verifyToken,
+  requireRole(['admin']),
+  [ param('id').isMongoId() ],
+  validate,
+  async (req, res) => {
+    const { name, email, role, password } = req.body;
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    // Actualizo sólo los campos que vengan
+    if (name)     user.name  = name;
+    if (email)    user.email = email;
+    if (role)     user.role  = role;
+    if (password) user.password = password;  // se harcodea en pre-save
+    await user.save();
+
+    res.json({ message: 'Usuario actualizado' });
+  }
+);
+
+/* ---------- ELIMINAR USUARIO (admin) ---------- */
+router.delete(
+  '/:id',
+  verifyToken,
+  requireRole(['admin']),
+  [ param('id').isMongoId() ],
+  validate,
+  async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+    await user.deleteOne();
+    res.json({ message: 'Usuario eliminado' });
+  }
+);
+
+// CREAR USUARIO (admin)
+router.post(
+  '/',
+  verifyToken,
+  requireRole(['admin']),
+  [
+    body('name').trim().notEmpty(),
+    body('email').isEmail(),
+    body('password').isLength({ min: 8 }),
+    body('role').isIn(['admin','technician','delivery'])
+  ],
+  validate,
+  async (req, res) => {
+    const { name, email, password, role } = req.body;
+    if (await User.findOne({ email }))
+      return res.status(409).json({ error: 'Email ya registrado' });
+    const u = await User.create({ name, email, password, role, approved: true });
+    res.status(201).json(u);
+  }
+);
 
 module.exports = router;

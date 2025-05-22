@@ -57,7 +57,7 @@ export class UserManagementComponent implements OnInit {
 
   edit(u: User) {
     this.editMode = true;
-    this.editId = u.id;
+    this.editId = u._id;
     this.form = { name: u.name, email: u.email, password: '', role: u.role };
   }
 

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, tap } from 'rxjs';
 
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: 'admin' | 'technician' | 'delivery' | 'pending';

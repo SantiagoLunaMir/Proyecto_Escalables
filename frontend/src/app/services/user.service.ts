@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface User {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   role: 'admin' | 'technician' | 'delivery' | 'pending';
@@ -23,7 +23,6 @@ export interface PendingUser {
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  /** Usa la misma base que tu proxy (sin http://localhost:3000) */
   private api = '/api/users';
 
   constructor(private http: HttpClient) {}
@@ -37,11 +36,11 @@ export class UserService {
     return this.http.post<User>(this.api, body);
   }
 
-  updateUser(id: string, body: { name: string; email: string; password?: string; role: string }): Observable<User> {
-    return this.http.put<User>(`${this.api}/${id}`, body);
+  updateUser(id: string, body: { name: string; email: string; role: string; password?: string }) {
+    return this.http.put<{ message: string }>(`${this.api}/${id}`, body);
   }
 
-  deleteUser(id: string): Observable<{ message: string }> {
+  deleteUser(id: string) {
     return this.http.delete<{ message: string }>(`${this.api}/${id}`);
   }
 

@@ -22,29 +22,71 @@
 
 <hr />
 
-<!-- FORMULARIO CREAR/EDITAR -->
+<!-- FORMULARIO CREAR -->
 <form *ngIf="!editMode" (ngSubmit)="createUser()" #cf="ngForm" class="user-form">
-  <!-- campos … -->
+  <label>
+    Nombre:
+    <input name="name" [(ngModel)]="form.name" required />
+  </label>
+  <label>
+    Email:
+    <input name="email" [(ngModel)]="form.email" required email />
+  </label>
+  <label>
+    Contraseña:
+    <input type="password" name="password" [(ngModel)]="form.password" required minlength="8" />
+  </label>
+  <label>
+    Rol:
+    <select name="role" [(ngModel)]="form.role" required>
+      <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+    </select>
+  </label>
+  <button type="submit" [disabled]="cf.invalid">Crear Usuario</button>
 </form>
 
+<!-- FORMULARIO EDITAR -->
 <form *ngIf="editMode" (ngSubmit)="updateUser()" #ef="ngForm" class="user-form">
-  <!-- campos … -->
+  <label>
+    Nombre:
+    <input name="name" [(ngModel)]="form.name" required />
+  </label>
+  <label>
+    Email:
+    <input name="email" [(ngModel)]="form.email" required email />
+  </label>
+  <label>
+    Nueva Contraseña:
+    <input type="password" name="password" [(ngModel)]="form.password" minlength="8" />
+  </label>
+  <label>
+    Rol:
+    <select name="role" [(ngModel)]="form.role" required>
+      <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+    </select>
+  </label>
+  <button type="submit" [disabled]="ef.invalid">Guardar Cambios</button>
+  <button type="button" (click)="resetForm()">Cancelar</button>
 </form>
 
 <hr />
 
 <!-- LISTA DE USUARIOS ACTIVOS -->
-<table>
+<h2>Usuarios Activos</h2>
+<table *ngIf="users.length; else noUsers">
   <thead>
     <tr><th>Nombre</th><th>Email</th><th>Rol</th><th>Acciones</th></tr>
   </thead>
   <tbody>
     <tr *ngFor="let u of users">
-      <td>{{ u.name }}</td><td>{{ u.email }}</td><td>{{ u.role }}</td>
+      <td>{{ u.name }}</td>
+      <td>{{ u.email }}</td>
+      <td>{{ u.role }}</td>
       <td>
         <button (click)="edit(u)">Editar</button>
-        <button (click)="delete(u.id)">Eliminar</button>
+        <button (click)="delete(u._id)">Eliminar</button>
       </td>
     </tr>
   </tbody>
 </table>
+<ng-template #noUsers><p>No hay usuarios.</p></ng-template>
